@@ -6,40 +6,55 @@ public abstract class Item {
     private int publishYear;
     private boolean available;
 
-    public Item(int id, String title, int publishYear, boolean available){
+    public Item() {
+    }
+
+    public Item(int id, String title, int publishYear, boolean available) {
         this.title = title;
         this.id = id;
         this.publishYear = publishYear;
         this.available = available;
     }
 
-    public int getId(){
+    public int getId() {
         return this.id;
     }
 
-    public String getTitle(){
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
         return this.title;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public int getPublishYear(){
+    public int getPublishYear() {
         return this.publishYear;
     }
 
-    public void setPublishYear(int publishYear){
+    public void setPublishYear(int publishYear) {
         this.publishYear = publishYear;
     }
 
-    public boolean getAvailable(){
+    public boolean getAvailable() {
         return this.available;
     }
 
-    public void setAvailable(boolean available){
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 
-    public abstract void showDetails();
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publishYear=" + publishYear +
+                ", available=" + available +
+                '}';
+    }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public interface Borrowable {
     public void borrow();
+
     public void returned();
+
     public LocalDate calculateTheLimitedDate();
 }

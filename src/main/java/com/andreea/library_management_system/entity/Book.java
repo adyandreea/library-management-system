@@ -9,58 +9,63 @@ public class Book extends Item implements Borrowable {
     private String genre;
     private LocalDate returnDate;
 
-    public Book(int id, String title, int publishYear, boolean available, String author, String genre){
+    public Book() {
+    }
+
+    public Book(int id, String title, int publishYear, boolean available, String author, String genre) {
         super(id, title, publishYear, available);
         this.author = author;
         this.genre = genre;
     }
 
-    public String getAuthor(){
+    public String getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(String author){
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public String getGenre(){
+    public String getGenre() {
         return this.genre;
     }
 
-    public void setGenre(String genre){
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    public LocalDate getReturnDate() {
+        return this.returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
     @Override
-    public void borrow(){
+    public void borrow() {
         setAvailable(false);
         calculateTheLimitedDate();
     }
 
     @Override
-    public void returned(){
+    public void returned() {
         setAvailable(true);
         this.returnDate = null;
     }
 
     @Override
-    public LocalDate calculateTheLimitedDate(){
+    public LocalDate calculateTheLimitedDate() {
         this.returnDate = LocalDate.now().plusDays(30);
         return returnDate;
     }
 
-    public LocalDate getReturnDate(){
-        return this.returnDate;
-    }
-
     @Override
-    public void showDetails() {
-        System.out.println("Id: " + getId() +
-                "\nTitle: " + getTitle() +
-                "\nPublish Year: " + getPublishYear() +
-                "\nAvailable: " + getAvailable() +
-                "\nAuthor: " + author +
-                "\nGenre: " + genre +
-                "\nDue date: " + returnDate);
+    public String toString() {
+        return "Book{" + super.toString() +
+                "author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
+                ", returnDate=" + returnDate +
+                '}';
     }
 }
