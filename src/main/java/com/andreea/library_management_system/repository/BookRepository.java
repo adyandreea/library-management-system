@@ -77,37 +77,32 @@ public class BookRepository {
         return books;
     }
 
-    public void saveBook(Book book) {
-        int generatedId = itemRepository.saveItem(book);
+    public void saveBook(Book book, int id) {
+        String insertBookSql = "INSERT INTO books (item_id, author, genre) VALUES (?,?,?)";
 
-        if (generatedId != -1) {
-            String insertBookSql = "INSERT INTO books (item_id, author, genre) VALUES (?,?,?)";
+        Connection connection = DatabaseManager.getInstance().connect();
+        try (PreparedStatement bookStmt = connection.prepareStatement(insertBookSql)) {
+            bookStmt.setInt(1, id);
+            bookStmt.setString(2, book.getAuthor());
+            bookStmt.setString(3, book.getGenre());
 
-            Connection connection = DatabaseManager.getInstance().connect();
-            try (PreparedStatement bookStmt = connection.prepareStatement(insertBookSql)) {
-                bookStmt.setInt(1, generatedId);
-                bookStmt.setString(2, book.getAuthor());
-                bookStmt.setString(3, book.getGenre());
-
-                bookStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Error saving item");
+            bookStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public void updateBook(Book book, int id) {
         itemRepository.updateItem(book, id);
 
-        String updateBookSql = "UPDATE books SET author = ?, genre = ? WHERE item_id = ?";
+        String updateBookSql = "UPDATE books SET author = ?, genre = ?, return_date = ? WHERE item_id = ?";
 
         Connection connection = DatabaseManager.getInstance().connect();
         try (PreparedStatement bookStmt = connection.prepareStatement(updateBookSql)) {
             bookStmt.setString(1, book.getAuthor());
             bookStmt.setString(2, book.getGenre());
-            bookStmt.setInt(3, id);
+            bookStmt.setObject(3, book.getReturnDate());
+            bookStmt.setInt(4, id);
 
             bookStmt.executeUpdate();
         } catch (SQLException e) {

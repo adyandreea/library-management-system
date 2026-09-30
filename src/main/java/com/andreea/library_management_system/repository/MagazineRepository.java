@@ -74,24 +74,19 @@ public class MagazineRepository {
     }
 
 
-    public void saveMagazine(Magazine magazine) {
-        int generatedId = itemRepository.saveItem(magazine);
-
+    public void saveMagazine(Magazine magazine, int id) {
         String insertMagazineSql = "INSERT INTO magazines (item_id, edition_number, month_appearance) VALUES (?,?,?)";
 
         Connection connection = DatabaseManager.getInstance().connect();
-        if (generatedId != -1) {
-            try (PreparedStatement magazineStmt = connection.prepareStatement(insertMagazineSql)) {
-                magazineStmt.setInt(1, generatedId);
-                magazineStmt.setInt(2, magazine.getEditionNumber());
-                magazineStmt.setInt(3, magazine.getMonthAppearance());
 
-                magazineStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Error saving item");
+        try (PreparedStatement magazineStmt = connection.prepareStatement(insertMagazineSql)) {
+            magazineStmt.setInt(1, id);
+            magazineStmt.setInt(2, magazine.getEditionNumber());
+            magazineStmt.setInt(3, magazine.getMonthAppearance());
+
+            magazineStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
