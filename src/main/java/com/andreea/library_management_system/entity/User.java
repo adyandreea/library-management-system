@@ -13,6 +13,18 @@ public class User {
         this.email = email;
     }
 
+    public User() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -25,12 +37,12 @@ public class User {
         return this.password;
     }
 
-    public void setPassword() {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     public String getEmail() {
-        return this.email = email;
+        return this.email;
     }
 
     public void setEmail(String email) {
